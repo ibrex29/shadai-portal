@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f7f3ea;
+  --foreground: #4c3a1c;
+  --primary: #c9a14b;
+  --accent: #8e6a25;
+  --secondary-accent: #18b63d;
+  --font-en: 'Poppins', sans-serif;
+  --font-ar: 'Cairo', 'Noto Sans Arabic', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-en);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[dir="rtl"] {
+  font-family: var(--font-ar);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  letter-spacing: 0;
+  word-spacing: 0.05em;
+}
+
+[dir="ltr"] {
+  font-family: var(--font-en);
+}
+
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  text-align: right;
+}
+
+[dir="rtl"] input::placeholder,
+[dir="rtl"] textarea::placeholder {
+  text-align: right;
+}
+
+.font-arabic {
+  font-family: var(--font-ar);
+}

@@ -1,0 +1,41 @@
+{
+    "extends": [
+      "next/core-web-vitals",
+      "prettier"
+    ],
+    "plugins": ["@typescript-eslint", "simple-import-sort", "unused-imports", "@tanstack/query"],
+    "ignorePatterns": ["static_forms/**"],
+    "root": true,
+     "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "@typescript-eslint/no-shadow": ["error"],
+        "no-shadow": "off",
+        "no-undef": "off"
+      }
+    },
+    {
+      "files": ["*.test.ts", "*.test.tsx"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/recommended", "plugin:jest/style"],
+      "env": {"jest/globals": true}
+    }
+  ],
+  "rules": {
+    //"max-len": ["error", {"code": 100}],
+    "semi": ["error", "always"],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "@typescript-eslint/no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+			"error",
+			{ "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+		],
+    "react/display-name": "off",
+    "@tanstack/query/exhaustive-deps": "error",
+    "@tanstack/query/no-rest-destructuring": "warn",
+    "@tanstack/query/stable-query-client": "error"
+  }
+}

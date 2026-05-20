@@ -1,0 +1,18 @@
+export const expertiseAreas = [
+  "Chemistry",
+  "Earth and Atmospheric Sciences",
+  "Physics",
+  "Biology",
+  "Agriculture",
+  "Biophysics and Biochemistry",
+  "Botany",
+  "Environmental Science",
+  "Zoology",
+  "Computer Science",
+  "Mathematics",
+  "Materials Science",
+  "Mechanics",
+  "Statistics",
+  "Software Engineering",
+  "Applied Science",
+];
