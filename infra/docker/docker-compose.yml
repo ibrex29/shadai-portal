@@ -1,0 +1,27 @@
+services:
+  shadai-portal:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+
+    image: shadai-portal:latest
+    container_name: shadai-portal
+
+    restart: unless-stopped
+
+    env_file:
+      - docker.env
+
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+
+    ports:
+      - "127.0.0.1:5006:3000"
+
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
