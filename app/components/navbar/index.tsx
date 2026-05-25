@@ -17,7 +17,7 @@ export default function Navbar({ locale, dir }: NavbarProps) {
     { href: "/", label: t.nav.home },
     { href: "/about-us", label: t.nav.about },
     { href: "/issues", label: t.nav.issues },
-    { href: "/submit", label: t.nav.submit },
+    { href: "/signin", label: t.nav.submit },
     { href: "/contact-us", label: t.nav.contact },
   ];
 

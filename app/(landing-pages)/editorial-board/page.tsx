@@ -1,27 +1,26 @@
-import Image from "next/image";
 import { getDirection } from "@/lib/locale";
 
 const boardMembers = [
-  {
-    role: "Chief Editor",
-    name: "Prof. Umar Saje",
-    image: "/images/chief-editor.jpg",
-  },
-  {
-    role: "Editor",
-    name: "Ass. Prof. Ilyasu Yahaya",
-    image: "/images/editor.jpg",
-  },
-  {
-    role: "Secretary / Editor",
-    name: "Dr. Makiyu Abubakar Danyaya",
-    image: "/images/secretary-editor.jpg",
-  },
-  {
-    role: "Editorial Manager",
-    name: "Umar Abdulhamid",
-    image: "/images/editorial-manager.jpg",
-  },
+  { role: "Editor-in-Chief", name: "Prof. Umar Saje — Dean, SPGS, SLUK" },
+  { role: "Editor", name: "Dr. Iliyasu Yahaya — Dept. of Islamic Studies" },
+  { role: "Editor", name: "Dr. Idris Hamza Yana — Department of English" },
+  { role: "Editor", name: "Dr. Abdulkadir Ginsau — Dept. of Nigerian Languages" },
+  { role: "Editor", name: "Dr. Muhammad Abubakar Suleiman — Dept. of Arabic" },
+  { role: "Editor", name: "Dr. Sadi Ibrahim Koki — Dept. of History" },
+  { role: "Editorial Secretary", name: "Dr. Makiyu Abubakar Danyaya" },
+  { role: "Editorial Manager", name: "Umar Abdulhamid" },
+];
+
+const editorialConsultants = [
+  { name: "Prof. Yusuf Dalhatu", affiliation: "Department of Islamic Studies, SLUK" },
+  { name: "Prof. Dahiru Abdulkadir", affiliation: "Department of Nigerian Languages, SLUK" },
+  { name: "Prof. Jamilu Abdullahi", affiliation: "Department of Arabic, BUK" },
+  { name: "Prof. M.T. Usman", affiliation: "Department of History" },
+  { name: "Prof. Umar Yusus", affiliation: "Department of Arabic, University of Maiduguri" },
+  { name: "Prof. Nura Sani", affiliation: "Department of Islamic Studies, BUK" },
+  { name: "Prof. Ahmad Murtala", affiliation: "Department of Islamic Studies, BUK" },
+  { name: "Prof. Umar Abbas", affiliation: "Department of Islamic Studies, BUK" },
+  { name: "Prof. Sanusi Ibrahim Chinade", affiliation: "Department of English, FUD" },
 ];
 
 export default async function EditorialBoardPage() {
@@ -36,19 +35,10 @@ export default async function EditorialBoardPage() {
             Editorial Board
           </p>
           <h1 className={`mt-3 text-3xl font-extrabold sm:text-5xl ${dir === "rtl" ? "text-end" : "text-start"}`}>
-            Meet Our Editorial Board
+            SHADAI Journal Leadership
           </h1>
           <p className={`mt-5 max-w-4xl text-base leading-8 text-amber-50 sm:text-lg ${dir === "rtl" ? "ms-auto text-end" : "text-start"}`}>
-            The Editorial Board of the journal comprises distinguished scholars and researchers drawn from various
-            departments within and outside the University. The board is responsible for maintaining the journal&apos;s
-            academic standards through rigorous peer-review processes, ensuring the quality, relevance, and originality
-            of every publication.
-          </p>
-          <p className={`mt-4 max-w-4xl text-base leading-8 text-amber-50 sm:text-lg ${dir === "rtl" ? "ms-auto text-end" : "text-start"}`}>
-            Under the leadership of the Editor-in-Chief, the board oversees manuscript evaluation, editorial policies,
-            and publication ethics in line with international best practices. Members of the editorial team are
-            committed to fostering intellectual exchange, encouraging interdisciplinary research, and providing a
-            credible platform for academic discourse within the humanities.
+            The editorial board is composed of experienced scholars from the Faculty of Humanities and partner universities. The board guarantees that every accepted paper meets rigorous academic standards and publication ethics.
           </p>
         </div>
       </section>
@@ -58,23 +48,31 @@ export default async function EditorialBoardPage() {
           {boardMembers.map((member) => (
             <article
               key={member.name}
-              className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm ring-1 ring-slate-200 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
-              <div className="relative aspect-[4/5] overflow-hidden bg-slate-100">
-                <Image
-                  src={member.image}
-                  alt={`${member.name} - ${member.role}`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
+              <div className={`mb-4 text-xs font-semibold uppercase tracking-wide text-accent ${dir === "rtl" ? "text-end" : "text-start"}`}>
+                {member.role}
               </div>
-              <div className={`p-5 ${dir === "rtl" ? "text-end" : "text-start"}`}>
-                <p className="text-xs font-semibold uppercase tracking-wide text-accent">{member.role}</p>
-                <h2 className="mt-2 text-lg font-bold text-slate-900">{member.name}</h2>
-              </div>
+              <h2 className={`text-lg font-bold text-slate-900 ${dir === "rtl" ? "text-end" : "text-start"}`}>
+                {member.name}
+              </h2>
             </article>
           ))}
+        </div>
+
+        <div className="mt-12 rounded-2xl bg-white p-8 shadow-sm ring-1 ring-slate-200">
+          <h2 className="text-2xl font-bold text-slate-900">Editorial Consultants</h2>
+          <p className="mt-3 text-slate-700">
+            The journal is supported by a panel of editorial consultants from leading departments in Nigerian universities.
+          </p>
+          <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+            {editorialConsultants.map((consultant) => (
+              <li key={consultant.name} className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <p className="font-semibold text-slate-900">{consultant.name}</p>
+                <p className="mt-2 text-sm text-slate-700">{consultant.affiliation}</p>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
     </div>

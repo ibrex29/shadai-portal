@@ -75,52 +75,50 @@ const enTranslation: TranslationShape = {
     },
     hero: {
       badge: "SHADAI Journal",
-      title: "SHADAI Journal",
-      tagline: "Advancing Knowledge Through Peer-Reviewed Research",
-      ctaPrimary: "Submit Manuscript",
-      ctaSecondary: "Browse Issues",
+      title: "SHADAI Journal of Contemporary Research in Humanities",
+      tagline:
+        "A biannual peer-reviewed journal of the Faculty of Humanities, Sule Lamido University Kafin Hausa.",
+      ctaPrimary: "Submit Your Manuscript",
+      ctaSecondary: "Explore Volume 2 Issue 1",
     },
     about: {
       title: "About the Journal",
       description:
-        "SHADAI Journal is a multidisciplinary, open-access, peer-reviewed journal dedicated to publishing high-quality research across science, technology, humanities, and social sciences.",
-      stats: ["Open Access", "Double-Blind Peer Review", "Fast Publication"],
+        "The SHADAI Journal of Contemporary Research in Humanities is a reputable peer-reviewed academic journal published twice yearly by the Faculty of Humanities, Sule Lamido University Kafin Hausa. It publishes original scholarship in Humanities, Education, Social Sciences and Law in Arabic, English, Hausa, Fulfulde, Yoruba, Igbo, and French.",
+      stats: [
+        "Biannual Humanities Research",
+        "Multilingual Academic Scholarship",
+        "Faculty of Humanities Publication",
+      ],
     },
     scope: {
       title: "Scope & Focus Areas",
       areas: [
-        "Science & Technology",
-        "Engineering",
-        "Health Sciences",
-        "Social Sciences",
         "Humanities",
-        "Education & Policy",
+        "Education",
+        "Social Sciences",
+        "Law",
+        "Islamic Studies",
+        "Nigerian Languages",
       ],
     },
     latest: {
-      title: "Latest Issues & Featured Articles",
+      title: "Current Issue",
       readMore: "Read More",
       issues: [
         {
-          volume: "Volume 1",
+          volume: "Volume 2",
           issue: "Issue 1",
-          title: "Multidisciplinary Frontiers in Contemporary Research",
+          title: "SHADAI Journal — 2nd Edition",
           abstract:
-            "A curated selection of peer-reviewed studies spanning scientific innovation, policy analysis, and social impact.",
+            "Official 2nd Edition of the SHADAI Journal of Contemporary Research in Humanities, published July 2025 / AlMuharram 1447 by the Faculty of Humanities, Sule Lamido University Kafin Hausa.",
         },
         {
           volume: "Volume 1",
           issue: "Issue 2",
-          title: "Emerging Methods in Data-Driven Discovery",
+          title: "Founding Issue Highlights",
           abstract:
-            "Highlights methodological advances in analytics, experimentation, and evidence-based scholarship.",
-        },
-        {
-          volume: "Volume 2",
-          issue: "Issue 1",
-          title: "Global Perspectives on Innovation and Society",
-          abstract:
-            "Explores interdisciplinary approaches to development, education, sustainability, and public health.",
+            "A collection of peer-reviewed articles from the inaugural year of SHADAI Journal, featuring key research in the humanities and social sciences.",
         },
       ],
     },
@@ -129,27 +127,30 @@ const enTranslation: TranslationShape = {
       stepPrefix: "Step",
       steps: [
         {
-          title: "Submit",
-          detail: "Upload your manuscript and required documents.",
+          title: "Prepare Your Manuscript",
+          detail:
+            "Follow our author guidelines and ensure your work is original and unpublished.",
         },
         {
-          title: "Peer Review",
-          detail: "Double-blind review by qualified subject experts.",
+          title: "Complete Submission Details",
+          detail:
+            "Include a title page, abstract, author affiliation, and contact information.",
         },
         {
-          title: "Publish",
-          detail: "Accepted work is edited, indexed, and published online.",
+          title: "Submit & Review",
+          detail:
+            "Send your manuscript through the portal or by email for peer review.",
         },
       ],
       guidelines: "Author Guidelines",
     },
     cta: {
-      title: "Ready to share your research with the world?",
+      title: "Submit your original humanities research for peer review today.",
       button: "Submit Your Paper",
     },
     footer: {
       description:
-        "Open-access and peer-reviewed publishing platform for multidisciplinary research.",
+        "Biannual peer-reviewed journal of the Faculty of Humanities, Sule Lamido University Kafin Hausa.",
       linksTitle: "Links",
       links: {
         home: "Home",

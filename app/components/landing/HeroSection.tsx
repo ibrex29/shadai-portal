@@ -35,7 +35,7 @@ export default function HeroSection({ locale, dir }: HeroSectionProps) {
         </p>
         <div className={`mt-8 flex flex-col gap-4 ${dir === "rtl" ? "items-end sm:flex-row-reverse" : "items-center sm:flex-row"} justify-center`}>
           <Link
-            href={withLocalePath(locale, "/submit")}
+            href={withLocalePath(locale, "/signin")}
             className="rounded-xl bg-white px-6 py-3 text-sm font-bold text-primary transition hover:bg-slate-100"
           >
             {t.hero.ctaPrimary}

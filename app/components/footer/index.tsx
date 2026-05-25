@@ -20,9 +20,9 @@ const Footer = ({ locale, dir }: FooterProps) => {
             {t.footer.description}
           </p>
           <p className="mt-4 text-sm text-slate-600">
-            {t.footer.emailLabel}: editor@shadaijournal.com
+            {t.footer.emailLabel}: makiyuabubakar@gmail.com
           </p>
-          <p className="text-sm text-slate-600">{t.footer.websiteLabel}: shadaijournal.com</p>
+          <p className="text-sm text-slate-600">{t.footer.websiteLabel}: www.slu.edu.ng</p>
         </div>
 
         <div className={dir === "rtl" ? "order-1 md:order-1 text-end" : "order-2 md:order-2 text-start"}>

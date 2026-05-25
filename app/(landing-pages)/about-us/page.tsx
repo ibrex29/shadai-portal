@@ -4,17 +4,18 @@ import { getDirection } from "@/lib/locale";
 const copy = {
   en: {
     title: "About SHADAI Journal",
-    subtitle: "A multidisciplinary, open-access, peer-reviewed journal",
-    body: "SHADAI Journal provides a rigorous academic platform for publishing high-quality scholarship across science, technology, humanities, social sciences, and education policy. Our editorial workflow prioritizes integrity, speed, and scholarly impact.",
-    stat1: "Open Access",
-    stat2: "Double-Blind Review",
-    stat3: "Global Contributors",
+    subtitle: "Faculty of Humanities, Sule Lamido University Kafin Hausa",
+    body:
+      "The SHADAI Journal of Contemporary Research in Humanities (SJCRH) is a reputable peer-reviewed academic journal published twice yearly by the Faculty of Humanities, Sule Lamido University Kafin Hausa. It publishes original, well-researched articles in Humanities, Education, Social Sciences, and Law in Arabic, English, Hausa, Fulfulde, Yoruba, Igbo, and French.",
+    stat1: "Biannual Publication",
+    stat2: "Multilingual Scholarship",
+    stat3: "Peer-Reviewed Humanities",
     missionTitle: "Our Mission",
     missionBody:
-      "To advance knowledge through transparent peer review, ethical publishing, and broad dissemination of credible research.",
+      "To advance rigorous humanities scholarship, support ethical peer review, and promote research that strengthens academic discourse across Nigeria and beyond.",
     visionTitle: "Our Vision",
     visionBody:
-      "To be a trusted journal ecosystem connecting researchers, reviewers, and editors across disciplines.",
+      "To be the leading humanities journal from Sule Lamido University Kafin Hausa, connecting scholars and communities through original research and scholarly exchange.",
   },
   // Arabic content is temporarily disabled.
   // ar: { ... },
