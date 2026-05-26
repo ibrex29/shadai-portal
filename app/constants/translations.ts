@@ -105,22 +105,7 @@ const enTranslation: TranslationShape = {
     latest: {
       title: "Current Issue",
       readMore: "Read More",
-      issues: [
-        {
-          volume: "Volume 2",
-          issue: "Issue 1",
-          title: "SHADAI Journal — 2nd Edition",
-          abstract:
-            "Official 2nd Edition of the SHADAI Journal of Contemporary Research in Humanities, published July 2025 / AlMuharram 1447 by the Faculty of Humanities, Sule Lamido University Kafin Hausa.",
-        },
-        {
-          volume: "Volume 1",
-          issue: "Issue 2",
-          title: "Founding Issue Highlights",
-          abstract:
-            "A collection of peer-reviewed articles from the inaugural year of SHADAI Journal, featuring key research in the humanities and social sciences.",
-        },
-      ],
+      issues: [],
     },
     authors: {
       title: "For Authors",
@@ -160,7 +145,7 @@ const enTranslation: TranslationShape = {
         contact: "Contact",
         editorialBoard: "Editorial Board",
       },
-      copy: "© 2025 SHADAI Journal. All rights reserved.",
+      copy: "© 2026 SHADAI Journal. All rights reserved.",
       emailLabel: "Email",
       websiteLabel: "Website",
     },
