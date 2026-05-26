@@ -22,6 +22,10 @@ export const metadata: Metadata = {
     "academic journal",
   ],
   authors: [{ name: "SHADAI Journal", url: "https://shadaijournal.com" }],
+  icons: {
+    icon: "/images/shadai-logo.png",
+    apple: "/images/shadai-logo.png",
+  },
   alternates: {
     canonical: "https://shadaijournal.com",
     languages: {

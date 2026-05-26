@@ -293,6 +293,7 @@ export interface Issue {
   createdAt: string;
   updatedAt: string;
   volumeId: string;
+  Volume?: Volume;
 }
 
 export interface Volume {
@@ -351,15 +352,6 @@ export interface GetManuscriptByIdResponse extends Manuscript {
   updatedByUserId: string | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   comments: any[]; // Define a more specific type if needed
-}
-
-export interface Issue {
-  id: string;
-  name: string;
-  createdAt: string;
-  Volume?: {
-    name: string;
-  };
 }
 
 export interface RecentManuscript {
