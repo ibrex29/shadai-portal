@@ -145,7 +145,9 @@ const enTranslation: TranslationShape = {
         contact: "Contact",
         editorialBoard: "Editorial Board",
       },
-      copy: "© 2026 SHADAI Journal. All rights reserved.",
+      
+      copy: `© ${new Date().getFullYear()} SHADAI Journal. All rights reserved.`,
+
       emailLabel: "Email",
       websiteLabel: "Website",
     },
