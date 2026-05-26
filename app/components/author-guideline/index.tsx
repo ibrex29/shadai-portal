@@ -4,45 +4,43 @@ import { motion } from "framer-motion";
 
 const steps = [
   {
-    title: "Preparation of the Manuscript",
-    description: "Ensure the manuscript follows formatting guidelines.",
+    title: "General Requirements",
+    description:
+      "Articles must be original, not published or submitted elsewhere, and must follow academic writing conventions.",
   },
   {
-    title: "Title Page",
-    description: "Include article title, authors, and contact details.",
+    title: "Abstract & Title Page",
+    description:
+      "Include an abstract not exceeding 200 words. The first page should contain title, author name, affiliation, department/unit, email, and phone number.",
   },
   {
-    title: "Abstract Page",
-    description: "Provide an abstract of up to 250 words with keywords.",
-  },
-  { title: "Keywords", description: "Include five or six relevant keywords." },
-  {
-    title: "Symbols, Abbreviations and Units",
-    description: "Define all symbols and abbreviations.",
+    title: "Second Page",
+    description:
+      "The second page should display only the paper title without the author name(s).",
   },
   {
-    title: "Introduction",
-    description: "Provide background, literature review, and objectives.",
+    title: "Language & Format",
+    description:
+      "Use Microsoft Word with Times New Roman size 12 for English or Traditional Arabic size 16 for Arabic, and double line spacing.",
   },
   {
-    title: "Theoretical Analysis",
-    description: "Explain mathematical principles or theories used.",
-  },
-  {
-    title: "Materials and Methods",
-    description: "Describe apparatus, materials, and methodologies used.",
-  },
-  {
-    title: "Results and Discussion",
-    description: "Interpret findings with tables and figures as needed.",
-  },
-  {
-    title: "Conclusion",
-    description: "Summarize findings, relevance, and recommendations.",
+    title: "Length",
+    description: "Manuscripts should not exceed 15 pages of A4 paper size.",
   },
   {
     title: "References",
-    description: "Follow the APA system for citations and references.",
+    description:
+      "Citations should use APA or MLA style, and endnotes should be adopted for references.",
+  },
+  {
+    title: "Submission Email",
+    description:
+      "Send a soft copy of the article intended for publication to makiyuabubakar@gmail.com or umaraa@slu.edu.ng.",
+  },
+  {
+    title: "Responsibility",
+    description:
+      "Contributors are responsible for the opinions, views, or comments expressed in their articles.",
   },
 ];
 
@@ -81,19 +79,18 @@ export default function AuthorGuideline() {
         </h1>
       </div>
       <div className="flex gap-4 max-w-4xl justify-center mt-8">
-        {/* Stepper Navigation */}
         <ol className="text-gray-700 border-s border-gray-200 sticky top-20 h-fit">
           {steps.map((step, index) => (
             <li
               key={index}
               className={`mb-10 ms-6 transition-all cursor-pointer ${
-                activeStep === index ? "text-green-500" : ""
+                activeStep === index ? "text-primary" : ""
               }`}
               onClick={() => handleStepClick(index)}
             >
               <span
                 className={`absolute flex items-center justify-center w-8 h-8 rounded-full -start-4 ring-4 ring-white ${
-                  activeStep === index ? "bg-green-200" : "bg-gray-100"
+                  activeStep === index ? "bg-primary/20" : "bg-gray-100"
                 }`}
               >
                 <svg
@@ -118,18 +115,17 @@ export default function AuthorGuideline() {
           ))}
         </ol>
 
-        {/* Step Sections */}
         <div className="flex-1">
           {steps.map((step, index) => (
             <motion.div
               key={index}
               id={`step-${index}`}
-              className="step-section p-4 bg-green-200 mb-8 rounded-lg"
+              className="step-section p-4 bg-slate-100 mb-8 rounded-lg"
               initial={{ opacity: 0 }}
               animate={{ opacity: activeStep === index ? 1 : 0.6 }}
             >
               <h2 className="text-xl font-semibold">{step.title}</h2>
-              <p className="text-black mt-2">{step.description}</p>
+              <p className="text-slate-700 mt-2">{step.description}</p>
             </motion.div>
           ))}
         </div>
