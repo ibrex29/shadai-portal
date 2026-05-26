@@ -47,21 +47,49 @@ const SigninForm: FC = () => {
   const login = async (data: any) => {
     setIsLoading(true);
     setShowError(false);
-    const res = await signIn("credentials", { redirect: false, ...data });
+    try {
+      const res = await signIn("credentials", { redirect: false, ...data });
 
-    if (res && res.ok) {
-      const user: Session | null | undefined = await getSession();
+      if (res?.error) {
+        // Login failed
+        setShowError(true);
+      } else if (res?.ok) {
+        // Login successful. Try to fetch an updated session a few times
+        // because session propagation can be slightly delayed.
+        const getSessionWithRetries = async (retries = 5, delay = 300) => {
+          for (let i = 0; i < retries; i++) {
+            const s = await getSession();
+            if (s && s.user?.role) return s;
+            // small backoff
+            // eslint-disable-next-line no-await-in-loop
+            await new Promise((r) => setTimeout(r, delay * (i + 1)));
+          }
+          return null;
+        };
 
-      if (user && user.user?.role !== undefined) {
-        const route = rolesMap[user.user.role] || "/";
-        router.push(route.toLowerCase());
+        const user: Session | null | undefined = await getSessionWithRetries();
+
+        if (user && user.user?.role) {
+          const route = rolesMap[user.user.role.toLowerCase()] || "/dashboard";
+          router.replace(route.toLowerCase());
+          // ensure server components refresh where needed
+          router.refresh();
+        } else {
+          // fallback: if we couldn't read the role yet, navigate to dashboard
+          // so the app can pick up the session cookie and server-side redirects.
+          console.debug("Signin succeeded but session not available yet, falling back to /dashboard");
+          router.replace("/");
+          router.refresh();
+        }
       } else {
         setShowError(true);
       }
-    } else {
+    } catch (error) {
+      console.error("Login error:", error);
       setShowError(true);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
