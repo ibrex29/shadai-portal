@@ -22,5 +22,6 @@ shell:
 	$(COMPOSE) exec shadai-portal sh
 
 rebuild:
+	$(COMPOSE) down
 	$(COMPOSE) build --no-cache
-	$(COMPOSE) up -d --remove-orphans
+	$(COMPOSE) up -d
