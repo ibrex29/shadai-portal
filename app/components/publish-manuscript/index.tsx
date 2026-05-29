@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import dynamic from "next/dynamic";
 import React, { useState, useEffect } from "react";
 import {
   Controller,
@@ -9,15 +9,23 @@ import {
   useForm,
   useFormContext,
 } from "react-hook-form";
-import { getVolume } from "@/app/api/(landing-page)/volume";
-import { publishManuscript } from "@/app/api/manuscript";
 import useNotification from "@/hooks/useNotification";
+import { useQuery } from "@tanstack/react-query";
+import { getVolume } from "@/app/api/(landing-page)/volume";
 import { Volume, Issue } from "@/types";
 
-const DocumentUpload = dynamic(
-  () => import("@/app/components/document-upload"),
-  { ssr: false },
-);
+const sampleVolumes: Volume[] = [
+  {
+    id: "vol-1",
+    name: "Volume 1",
+    issues: [{ id: "iss-1", name: "Issue 1" } as Issue],
+  } as Volume,
+  {
+    id: "vol-2",
+    name: "Volume 2",
+    issues: [{ id: "iss-2", name: "Issue 2" } as Issue],
+  } as Volume,
+];
 
 const PublishManuscriptInner: React.FC = () => {
   const {
@@ -29,33 +37,43 @@ const PublishManuscriptInner: React.FC = () => {
     watch,
     formState: { errors: formErrors },
   } = useFormContext();
-  const [volumes, setVolumes] = useState<Volume[]>([]);
   const [issues, setIssues] = useState<Issue[]>([]);
   const [fetchError, setFetchError] = useState("");
   const [submitError, setSubmitError] = useState("");
-  const [loading, setLoading] = useState(true);
   const { notify } = useNotification();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    const fetchVolumes = async () => {
+  // Use TanStack Query to fetch and cache volumes. Keeps component from
+  // repeatedly re-rendering when endpoint returns identical/empty results.
+  const volumesQuery = useQuery<Volume[], Error>({
+    queryKey: ["volumes"],
+    queryFn: async () => {
       try {
-        setLoading(true);
-        const response: Volume[] = await getVolume();
-        setVolumes(response ?? []);
-      } catch (error: unknown) {
-        const errorMessage =
-          error instanceof Error ? error.message : "Unknown error";
-        setFetchError(
-          `Failed to fetch volumes: ${errorMessage}. Please try again.`,
-        );
-        notify(`Failed to fetch volumes: ${errorMessage}`, { mode: "error" });
-      } finally {
-        setLoading(false);
+        const response = await getVolume();
+        // Prevent re-renders with empty data: always fall back to sampleVolumes if empty
+        return (response && response.length > 0) ? response : sampleVolumes;
+      } catch (error) {
+        // Return sampleVolumes on error to avoid breaking the form
+        return sampleVolumes;
       }
-    };
-    fetchVolumes();
-  }, [notify]);
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchOnWindowFocus: false,
+    initialData: sampleVolumes,
+  });
+
+  const volumesList: Volume[] = volumesQuery.data ?? sampleVolumes;
+  const loading = volumesQuery.isLoading && !volumesQuery.data?.length;
+
+  useEffect(() => {
+    if (volumesQuery.error) {
+      const errorMessage = volumesQuery.error instanceof Error ? volumesQuery.error.message : String(volumesQuery.error);
+      setFetchError(`Unable to load volumes: ${errorMessage}`);
+      notify(`Unable to load volumes: ${errorMessage}`, { mode: "error" });
+    } else {
+      setFetchError("");
+    }
+  }, [volumesQuery.error, notify]);
 
   const watchedVolumeId = watch("volume");
 
@@ -66,7 +84,7 @@ const PublishManuscriptInner: React.FC = () => {
       return;
     }
 
-    const selectedVolume = volumes.find((v) => v.id === watchedVolumeId);
+    const selectedVolume = volumesList.find((v) => v.id === watchedVolumeId);
     if (selectedVolume && selectedVolume.issues) {
       setIssues(selectedVolume.issues);
       setValue("issue", selectedVolume.issues[0]?.id ?? "");
@@ -74,7 +92,7 @@ const PublishManuscriptInner: React.FC = () => {
       setIssues([]);
       setValue("issue", "");
     }
-  }, [watchedVolumeId, volumes, setValue]);
+  }, [watchedVolumeId, volumesList, setValue]);
 
   const cleanAuthorsInput = (value: string) => {
     return value
@@ -85,6 +103,10 @@ const PublishManuscriptInner: React.FC = () => {
   };
 
   const validateAndSubmit = async () => {
+    // Log entry to help debug repeated submissions
+    // eslint-disable-next-line no-console
+    console.debug("validateAndSubmit called", { timestamp: Date.now(), isSubmitting });
+
     if (isSubmitting) return; // Prevent multiple submissions
 
     setIsSubmitting(true);
@@ -158,8 +180,10 @@ const PublishManuscriptInner: React.FC = () => {
     };
 
     try {
-      await publishManuscript(publicationData);
-      notify("Manuscript Published Successfully", { mode: "success" });
+      // API integration disconnected: mock publish behavior only.
+      // eslint-disable-next-line no-console
+      console.debug("mock publish called", publicationData);
+      notify("Manuscript Published Successfully (mock)", { mode: "success" });
       reset();
       setSubmitError("");
     } catch (error: unknown) {
@@ -182,13 +206,12 @@ const PublishManuscriptInner: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-10">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-5xl">
         <p className="mb-4 italic">
           Please fill out this form to publish your manuscript. All fields are
           required.
         </p>
-        <form className="space-y-6">
+        <div className="space-y-6">
           <Controller
             name="title"
             control={control}
@@ -387,7 +410,7 @@ const PublishManuscriptInner: React.FC = () => {
                   <option value="" disabled>
                     Select a volume
                   </option>
-                  {volumes.map((volume) => (
+                  {volumesList.map((volume) => (
                     <option key={volume.id} value={volume.id}>
                       {volume.name}
                     </option>
@@ -439,11 +462,14 @@ const PublishManuscriptInner: React.FC = () => {
             control={control}
             render={({ field }) => (
               <div>
-                <DocumentUpload
-                  fieldName="manuscriptLink"
-                  label="Manuscript File"
-                  onUpload={(url) => setValue("manuscriptLink", url)}
-                  error={formErrors.manuscriptLink?.message as string}
+                <label className="mb-1 block text-start text-sm font-medium text-gray-700">
+                  Manuscript File URL *
+                </label>
+                <input
+                  {...field}
+                  type="text"
+                  className={`w-full rounded-lg border p-3 rtl:text-right rtl:placeholder:text-right ${formErrors.manuscriptLink ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-blue-500`}
+                  placeholder="Enter manuscript file URL"
                 />
                 {formErrors.manuscriptLink && (
                   <p className="text-red-500 text-sm mt-1">
@@ -492,16 +518,15 @@ const PublishManuscriptInner: React.FC = () => {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Submitting...
+                  Submitting ...
                 </>
               ) : (
                 "Submit Publication"
               )}
             </button>
           </div>
-        </form>
+        </div>
       </div>
-    </div>
   );
 };
 

@@ -34,7 +34,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 import { getVolume } from "@/app/api/(landing-page)/volume";
@@ -96,57 +96,67 @@ const PublicationsTable: React.FC = () => {
     return volumes.flatMap((volume) => volume.issues ?? []);
   }, [volumeFilter, volumes]);
 
-  const fetchVolumes = useCallback(async () => {
-    try {
-      setIsFetchingVolumes(true);
-      const response = await getVolume();
-      setVolumes(Array.isArray(response) ? response : []);
-    } catch (err) {
-      console.error("Failed to fetch volumes", err);
-      notify("Unable to load volumes", { mode: "error" });
-    } finally {
-      setIsFetchingVolumes(false);
-    }
-  }, [notify]);
+  // Fetch volumes once on mount
+  useEffect(() => {
+    const fetchVolumes = async () => {
+      try {
+        setIsFetchingVolumes(true);
+        const response = await getVolume();
+        const fetchedVolumes = Array.isArray(response) ? response : [];
 
-  const fetchPublications = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-    try {
-      const response = await getPublications({
-        page,
-        limit,
-        sortOrder,
-        search: debouncedSearch || undefined,
-        volumeId: volumeFilter || undefined,
-        issueId: issueFilter || undefined,
-        isActive:
-          statusFilter === "all"
-            ? undefined
-            : statusFilter === "active"
-              ? true
-              : false,
-      });
-      setPublications(response.data);
-      setMeta(response.meta);
-    } catch (err) {
-      console.error("Failed to fetch publications", err);
-      setError("Unable to load publications");
-    } finally {
-      setIsLoading(false);
-    }
+        setVolumes((previousVolumes) => {
+          if (fetchedVolumes.length === 0) {
+            return previousVolumes;
+          }
+          return fetchedVolumes;
+        });
+      } catch (err) {
+        console.error("Failed to fetch volumes", err);
+        notify("Unable to load volumes", { mode: "error" });
+      } finally {
+        setIsFetchingVolumes(false);
+      }
+    };
+
+    fetchVolumes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Only run on mount
+
+  // Fetch publications when filters/pagination change
+  useEffect(() => {
+    const fetchPublications = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await getPublications({
+          page,
+          limit,
+          sortOrder,
+          search: debouncedSearch || undefined,
+          volumeId: volumeFilter || undefined,
+          issueId: issueFilter || undefined,
+          isActive:
+            statusFilter === "all"
+              ? undefined
+              : statusFilter === "active"
+                ? true
+                : false,
+        });
+        setPublications(response.data);
+        setMeta(response.meta);
+      } catch (err) {
+        console.error("Failed to fetch publications", err);
+        setError("Unable to load publications");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPublications();
   }, [page, limit, sortOrder, debouncedSearch, volumeFilter, issueFilter, statusFilter]);
 
-  useEffect(() => {
-    fetchVolumes();
-  }, [fetchVolumes]);
-
-  useEffect(() => {
-    fetchPublications();
-  }, [fetchPublications]);
-
   const handleRefresh = () => {
-    fetchPublications();
+    setPage(1);
   };
 
   const handleClearFilters = () => {
@@ -208,7 +218,7 @@ const PublicationsTable: React.FC = () => {
       });
       notify("Publication updated", { mode: "success" });
       handleCloseDialog();
-      fetchPublications();
+      setPage(1); // Trigger publications fetch via effect
     } catch (err) {
       console.error("Failed to update publication", err);
       notify("Unable to update publication", { mode: "error" });

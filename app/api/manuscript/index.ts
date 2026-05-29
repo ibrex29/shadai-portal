@@ -528,6 +528,8 @@ export const getREManuscript = async (
 
 export const publishManuscript = async (payload: any) => {
   const bearerHeader = await getBearerHeader();
+  // eslint-disable-next-line no-console
+  console.debug("publishManuscript called", { timestamp: Date.now(), payloadSummary: { title: payload?.title, doi: payload?.doi } });
   const response = await request("POST", `${api.publishManuscript}`, {
     headers: {
       "Content-Type": "application/json",
@@ -535,7 +537,8 @@ export const publishManuscript = async (payload: any) => {
     },
     data: payload,
   });
-
+  // eslint-disable-next-line no-console
+  console.debug("publishManuscript response", { timestamp: Date.now(), status: response?.statusCode ?? "unknown" });
   if (response && response.statusCode === 401) {
     logout();
   }
