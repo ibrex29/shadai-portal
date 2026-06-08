@@ -17,11 +17,10 @@ logs:
 
 ps:
 	$(COMPOSE) ps
-
+sed -i 's|NEXT_PUBLIC_JOURNAL_SUBDOMAIN=.*|NEXT_PUBLIC_JOURNAL_SUBDOMAIN=jijosams|' infra/docker/docker.env
 shell:
 	$(COMPOSE) exec shadai-portal sh
 
 rebuild:
-	$(COMPOSE) down
 	$(COMPOSE) build --no-cache
-	$(COMPOSE) up -d
+	$(COMPOSE) up -d --no-deps --force-recreate
