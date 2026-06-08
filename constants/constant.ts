@@ -24,4 +24,5 @@ export const expertiseAreas = [
   "Environmental Law",
   "Human Rights Law",
   "Islamic Law",
+
 ];
